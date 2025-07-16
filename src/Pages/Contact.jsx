@@ -91,6 +91,7 @@ export default function Contact() {
 
       {/* Contact Info Row */}
       <div className="flex flex-col md:flex-col items-center justify-center gap-8 max-w-5xl mx-auto text-purple-100">
+        <h2 className="font-semibold text-2xl font-serif">Contact Us</h2>
         {/* 3 Cards Row */}
         <div className="flex flex-wrap justify-center gap-6 w-full">
           {/* Email */}

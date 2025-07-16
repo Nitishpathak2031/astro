@@ -9,6 +9,7 @@ import {
   FaMagic,
 } from "react-icons/fa";
 
+// Category icons
 const iconMap = {
   "Planetary Transits": <FaMoon />,
   "Birth Chart Analysis": <FaStar />,
@@ -22,21 +23,21 @@ const Blogs = () => {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
 
-  const API_TOKEN = "fbdc086f57bec175a4ca02cc13f295afd6a8d8b08caf33344932d4a18af9a0e7f4651a0dfc926037db5ec2d0a982d8176ceb27632599dd3e05f0518c469053ff0e60a9b6a139597c7e48df54d39ca9c6203ae252a956cd3300f3e8e87f702199451f3d964ccc9b85f2e5a6e404d89391ff30a6565592dd4f5935962a91fbfc25";
+  const API_TOKEN =
+    "fbdc086f57bec175a4ca02cc13f295afd6a8d8b08caf33344932d4a18af9a0e7f4651a0dfc926037db5ec2d0a982d8176ceb27632599dd3e05f0518c469053ff0e60a9b6a139597c7e48df54d39ca9c6203ae252a956cd3300f3e8e87f702199451f3d964ccc9b85f2e5a6e404d89391ff30a6565592dd4f5935962a91fbfc25";
 
+  // Fetch all articles
   useEffect(() => {
-    fetch(
-      "https://thankful-dance-5b37d3980b.strapiapp.com/api/astrology-articles",
-      {
-        headers: {
-          Authorization: `Bearer ${API_TOKEN}`,
-        },
-      }
-    )
+    fetch("https://thankful-dance-5b37d3980b.strapiapp.com/api/astrology-articles", {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         const cleaned = data?.data?.map((item) => ({
           id: item.id,
+          documentId: item.documentId,
           title: item.Heading,
           description: item.Description || item.SubHeading || "No description provided",
           category: item.ArticleType || "Uncategorized",
@@ -51,10 +52,11 @@ const Blogs = () => {
       });
   }, []);
 
-  const fetchFullArticleByID = async (id) => {
+  // Fetch full article by documentId
+  const fetchFullArticleByDocumentId = async (documentId) => {
     try {
       const res = await fetch(
-        `https://thankful-dance-5b37d3980b.strapiapp.com/api/astrology-articles/${id}?populate=*`,
+        `https://thankful-dance-5b37d3980b.strapiapp.com/api/astrology-articles/${documentId}`,
         {
           headers: {
             Authorization: `Bearer ${API_TOKEN}`,
@@ -62,20 +64,15 @@ const Blogs = () => {
         }
       );
 
-      if (!res.ok) {
-        throw new Error(`Failed to fetch article: ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`Failed to fetch article: ${res.status}`);
 
       const data = await res.json();
-       console.log("✅ Full Article API Response:", data);
-      const attributes = data?.data?.attributes;
+      const attributes = data?.data;
 
-      if (!attributes) {
-        throw new Error("Invalid article response");
-      }
+      if (!attributes) throw new Error("Invalid article response");
 
       setSelectedArticle({
-        id: data.data.id,
+        id: attributes.id,
         title: attributes.Heading,
         description: attributes.SubHeading || "No description",
         fullContent: attributes.Description || "Full content not available",
@@ -100,6 +97,7 @@ const Blogs = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4">
+        {/* Featured article */}
         {articles[0] && (
           <div className="bg-purple-800/30 border border-purple-600 rounded-xl p-6 flex flex-col md:flex-row items-center gap-6 mb-12">
             <div className="w-full md:w-2/3">
@@ -118,7 +116,7 @@ const Blogs = () => {
                 <span>👁 {articles[0].views}</span>
               </div>
               <button
-                onClick={() => fetchFullArticleByID(articles[0].id)}
+                onClick={() => fetchFullArticleByDocumentId(articles[0].documentId)}
                 className="mt-5 hover:scale-105 transition bg-gradient-to-r from-[#EB9321] to-[#9A3BD8] px-5 py-3 rounded text-white"
               >
                 Read Full Article →
@@ -132,11 +130,11 @@ const Blogs = () => {
           </div>
         )}
 
-        {/* Blog Cards */}
+        {/* Blog cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {articles.slice(1).map((post) => (
             <div
-              key={post.id}
+              key={post.documentId}
               className="bg-[#4D2272] hover:scale-105 transition border border-purple-600 rounded-xl p-5"
             >
               <div className="text-yellow-300 flex flex-col items-center gap-2 text-sm mb-2">
@@ -152,7 +150,7 @@ const Blogs = () => {
                 <p>{post.time} 👁 {post.views}</p>
               </div>
               <button
-                onClick={() => fetchFullArticleByID(post.id)}
+                onClick={() => fetchFullArticleByDocumentId(post.documentId)}
                 className="mt-4 bg-purple-600 w-full text-white px-4 py-2 rounded-xl hover:bg-purple-700 text-sm"
               >
                 📖 Read Article
@@ -180,7 +178,9 @@ const Blogs = () => {
               ❌ Close
             </button>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-yellow-400 text-xl">{iconMap[selectedArticle.category] || <FaGlobe />}</span>
+              <span className="text-yellow-400 text-xl">
+                {iconMap[selectedArticle.category] || <FaGlobe />}
+              </span>
               <span className="bg-purple-800 text-sm px-3 py-1 rounded-full">
                 {selectedArticle.category}
               </span>
@@ -189,6 +189,10 @@ const Blogs = () => {
             <p className="text-purple-200 mb-6 whitespace-pre-line">
               {selectedArticle.fullContent}
             </p>
+            <div>
+              <h2 className="text-xl font-semibold pb-2">Discription</h2>
+              <p className="mb-2">{selectedArticle.description}</p>
+            </div>
             <div className="text-xs text-purple-400">
               {selectedArticle.date} • {selectedArticle.time} • 👁 {selectedArticle.views}
             </div>
@@ -200,12 +204,6 @@ const Blogs = () => {
 };
 
 export default Blogs;
-
-
-
-
-
-// import React, { useState } from "react";
 // import {
 //   FaStar,
 //   FaMoon,
