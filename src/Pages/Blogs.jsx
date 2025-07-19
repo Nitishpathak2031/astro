@@ -149,12 +149,14 @@ const Blogs = () => {
                 <p>{post.date}</p>
                 <p>{post.time} 👁 {post.views}</p>
               </div>
-              <button
+              <div className="">
+                <button
                 onClick={() => fetchFullArticleByDocumentId(post.documentId)}
                 className="mt-4 bg-purple-600 w-full text-white px-4 py-2 rounded-xl hover:bg-purple-700 text-sm"
               >
                 📖 Read Article
               </button>
+              </div>
             </div>
           ))}
         </div>

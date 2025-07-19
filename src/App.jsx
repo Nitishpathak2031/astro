@@ -7,6 +7,7 @@ import Insights from "./Pages/InSights";
 import Contact from "./Pages/Contact";
 import Footer from "./components/Footer";
 import Blogs from "./Pages/Blogs";
+import EnquiryButton from "./components/EnquiryButton";
 
 export default function App() {
 
@@ -20,6 +21,7 @@ export default function App() {
       <section id="insights"><Insights /></section>
       <section id="contact"><Contact /></section>
       <Footer />
+      <EnquiryButton/>
     </div>
   );
 }

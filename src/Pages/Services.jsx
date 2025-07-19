@@ -42,7 +42,7 @@ const services = [
 
 const Services = () => {
   return (
-    <section className="bg-gradient-to-r from-purple-900 to-blue-900 py-20 px-6 text-white min-h-screen">
+    <section id="services" className="bg-gradient-to-r from-purple-900 to-blue-900 py-20 px-6 text-white min-h-screen">
       <div className="text-center mb-12">
         <h2 className="text-4xl sm:text-5xl font-bold text-yellow-300">Celestial Services</h2>
         <p className="text-lg mt-4 text-gray-300 max-w-2xl mx-auto">
@@ -61,7 +61,14 @@ const Services = () => {
             <p className="text-sm text-gray-300 mb-4">{service.description}</p>
             <div className="flex justify-between items-center">
               <span className="text-yellow-400 font-semibold">{service.price}</span>
-              <button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-full hover:brightness-110">
+              <button
+              onClick={()=>{
+                const booknow = document.getElementById("contact");
+                if(booknow){
+                  booknow.scrollIntoView({behavior:"smooth"});
+                }
+              }}
+              className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-full hover:brightness-110">
                 Book Now
               </button>
             </div>

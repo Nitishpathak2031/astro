@@ -2,10 +2,11 @@ import React from "react";
 import { BiPhone } from "react-icons/bi";
 import { CiLocationOn } from "react-icons/ci";
 import { MdEmail } from "react-icons/md";
+import Community from "./Community"
 
 export default function Contact() {
   return (
-    <div className="bg-gradient-to-b from-[#2a0040] to-[#4b0082] text-white px-4 md:px-6 py-16">
+    <div id="contact" className="bg-gradient-to-b from-[#2a0040] to-[#4b0082] text-white px-4 md:px-6 py-16">
       {/* Heading */}
       <div className="text-center mb-10 max-w-3xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-purple-200">
@@ -138,6 +139,7 @@ export default function Contact() {
           </div>
         </div>
       </div>
+      <Community/>
     </div>
   );
 }

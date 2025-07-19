@@ -2,9 +2,9 @@ import React from "react";
 
 export default function Community() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#2a0040] to-[#4b0082] text-white p-6 space-y-10">
+    <div className="min-h-screen bg-gradient-to-b from-[#3e075c] to-[#4b0082] text-white p-6 space-y-10">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-purple-200 mb-2">Planetary Camaraderie</h1>
+        <h1 className="text-4xl font-bold text-white mb-2">Planetary Camaraderie</h1>
         <p className="text-lg text-purple-100 max-w-2xl mx-auto">
           Join our cosmic community where kindred spirits share their celestial journey and support each other's growth.
         </p>
